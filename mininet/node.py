@@ -1561,7 +1561,7 @@ class RemoteController( Controller ):
         else:
             return True
 
-DefaultControllers = ( Controller, OVSController )
+DefaultControllers = ( OVSController, Controller )
 
 def findController( controllers=DefaultControllers ):
     "Return first available controller from list, if any"
