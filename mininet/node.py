@@ -310,7 +310,7 @@ class Node( object ):
             cmd += ' printf "\\001%d\\012" $! '
         elif printPid and not isShellBuiltin( cmd ):
             cmd = 'mnexec -p ' + cmd
-        info("sendCmd: " +  ' '.join(cmd) + '\n' )
+        info("sendCmd: " +  cmd + '\n' )
         self.write( cmd + '\n' )
         self.lastPid = None
         self.waiting = True
@@ -1462,9 +1462,9 @@ class OVSController( Controller ):
 
     @classmethod
     def isAvailable( cls ):
-        return ( quietRun( 'which ovs-controller' ) or
-                 quietRun( 'which test-controller' ) or
-                 quietRun( 'which ovs-testcontroller' ) ).strip()
+        return ( quietRun( 'which ovs-testcontroller' ) or
+                 quietRun( 'which ovs-controller' ) or
+                 quietRun( 'which test-controller' ) ).strip()
 
 class NOX( Controller ):
     "Controller to run a NOX application."
