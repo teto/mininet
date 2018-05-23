@@ -156,6 +156,8 @@ class Node( object ):
         self.pid = self.shell.pid
         self.pollOut = select.poll()
         self.pollOut.register( self.stdout )
+
+        info ("shell wth pid [%d]" % (self.shell.pid, ))
         # Maintain mapping between file descriptors and nodes
         # This is useful for monitoring multiple nodes
         # using select.poll()
@@ -308,7 +310,7 @@ class Node( object ):
             cmd += ' printf "\\001%d\\012" $! '
         elif printPid and not isShellBuiltin( cmd ):
             cmd = 'mnexec -p ' + cmd
-        info("MATT: will run: " +  cmd + '\n' )
+        info("sendCmd: " +  ' '.join(cmd) + '\n' )
         self.write( cmd + '\n' )
         self.lastPid = None
         self.waiting = True
