@@ -85,6 +85,7 @@ LINKDEF = 'default'
 LINKS = { 'default': Link,  # Note: overridden below
           'tc': TCLink,
           'tcu': TCULink,
+          'asymtc': AsymTCLink,
           'ovs': OVSLink }
 
 # TESTS dict can contain functions and/or Mininet() method names
