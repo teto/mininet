@@ -611,7 +611,7 @@ class Node( object ):
         self.setParam( r, 'setIP', ip=ip )
         self.setParam( r, 'setDefaultRoute', defaultRoute=defaultRoute )
         # This should be examined
-        self.cmd( 'ifconfig lo ' + lo )
+        self.cmd( 'ifconfig -v lo ' + lo )
         return r
 
     def configDefault( self, **moreParams ):
@@ -1129,7 +1129,7 @@ class OVSSwitch( Switch ):
     def attach( self, intf ):
         "Connect a data port"
         self.vsctl( 'add-port', self, intf )
-        self.cmd( 'ifconfig', intf, 'up' )
+        self.cmd( 'ifconfig', '-v', intf, 'up' )
         self.TCReapply( intf )
 
     def detach( self, intf ):
