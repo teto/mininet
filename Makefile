@@ -61,13 +61,13 @@ develop: $(MNEXEC) $(MANPAGES)
 # 	Perhaps we should link these as well
 	install $(MNEXEC) $(BINDIR)
 	install $(MANPAGES) $(MANDIR)
-	$(PYTHON) setup.py develop
+	python setup.py develop
 
 man: $(MANPAGES)
 
 mn.1: $(MN)
 	PYTHONPATH=. help2man -N -n "create a Mininet network." \
-	--no-discard-stderr "$(VERSION)" -o $@
+	--no-discard-stderr "$(PYMN)" -o $@
 
 mnexec.1: mnexec
 	help2man -N -n "execution utility for Mininet." \
