@@ -66,7 +66,7 @@ class Intf( object ):
 
     def ifconfig( self, *args ):
         "Configure ourselves using ifconfig"
-        return self.cmd( 'ifconfig', '-v', self.name, *args )
+        return self.cmd( 'ifconfig', self.name, *args )
 
     def setIP( self, ipstr, prefixLen=None ):
         """Set our IP address"""
@@ -74,7 +74,7 @@ class Intf( object ):
         # mechanism and/or the way we specify IP addresses
         if '/' in ipstr:
             self.ip, self.prefixLen = ipstr.split( '/' )
-            return self.ifconfig( ipstr, '-v', 'up' )
+            return self.ifconfig( ipstr, 'up' )
         else:
             if prefixLen is None:
                 raise Exception( 'No prefix length set for IP address %s'
