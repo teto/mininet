@@ -133,11 +133,15 @@ class Intf( object ):
 
     def isUp( self, setUp=False ):
         "Return whether interface is up"
+        debug("MATT setting if up\n")
         if setUp:
-            cmdOutput = self.ifconfig( 'up' )
+            # 'strace' , '-o', 'log_ifconfig', 
+            # cmdOutput = self.ifconfig( 'up' )
+            #
+            cmdOutput = self.node.cmdPrint( 'ifconfig', self.name, 'up' )
             # no output indicates success
             if cmdOutput:
-                error( "Error setting %s up: %s " % ( self.name, cmdOutput ) )
+                error( "Error setting %s up, cmd output:\n[%s] " % ( self.name, cmdOutput ) )
                 return False
             else:
                 return True

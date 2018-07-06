@@ -140,7 +140,7 @@ class Node( object ):
         # -s: pass $* to shell, and make process easy to find in ps
         # prompt is set to sentinel chr( 127 )
         cmd = [ 'mnexec', opts, 'env', 'PS1=' + chr( 127 ),
-                'bash', '--norc', '--noediting',
+                'bash', '--norc', '--noediting', '--noprofile',
                 '-is', 'mininet:' + self.name ]
 
         # Spawn a shell subprocess in a pseudo-tty, to disable buffering
@@ -157,7 +157,7 @@ class Node( object ):
         self.pollOut = select.poll()
         self.pollOut.register( self.stdout )
 
-        info ("shell wth pid [%d]" % (self.shell.pid, ))
+        info ("shell with pid [%d]" % (self.shell.pid, ))
         # Maintain mapping between file descriptors and nodes
         # This is useful for monitoring multiple nodes
         # using select.poll()
@@ -175,6 +175,7 @@ class Node( object ):
             self.pollOut.poll()
         self.waiting = False
         # +m: disable job control notification
+        # -echo dont display input characters
         self.cmd( 'unset HISTFILE; stty -echo; set +m' )
 
     def mountPrivateDirs( self ):
@@ -310,7 +311,7 @@ class Node( object ):
             cmd += ' printf "\\001%d\\012" $! '
         elif printPid and not isShellBuiltin( cmd ):
             cmd = 'mnexec -p ' + cmd
-        info("sendCmd: " +  cmd + '\n' )
+        info("sendCmd: [" +  cmd + ']\n' )
         self.write( cmd + '\n' )
         self.lastPid = None
         self.waiting = True
@@ -611,7 +612,9 @@ class Node( object ):
         self.setParam( r, 'setIP', ip=ip )
         self.setParam( r, 'setDefaultRoute', defaultRoute=defaultRoute )
         # This should be examined
-        self.cmd( 'ifconfig lo ' + lo )
+        # self.cmd( 'strace -olog' + lo + ' -f ifconfig lo ' + lo )
+        # self.cmd( 'ifconfig', '-v', 'lo', lo)
+        self.cmd( 'ip link set lo ' + lo)
         return r
 
     def configDefault( self, **moreParams ):
