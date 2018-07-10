@@ -1426,6 +1426,7 @@ class Controller( Node ):
         cout = '/tmp/' + self.name + '.log'
         if self.cdir is not None:
             self.cmd( 'cd ' + self.cdir )
+        info("Starting controller instance %s" % self.__class__.__name__)
         self.cmd( self.command + ' ' + self.cargs % self.port +
                   ' 1>' + cout + ' 2>' + cout + ' &' )
         self.execed = False
@@ -1575,6 +1576,7 @@ def findController( controllers=DefaultControllers ):
 def DefaultController( name, controllers=DefaultControllers, **kwargs ):
     "Find a controller that is available and instantiate it"
     controller = findController( controllers )
+    print("found controller ", controller.name)
     if not controller:
         raise Exception( 'Could not find a default OpenFlow controller' )
     return controller( name, **kwargs )
