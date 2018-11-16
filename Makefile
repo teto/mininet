@@ -46,7 +46,7 @@ slowtest: $(MININET)
 	mininet/examples/test/runner.py -v
 
 mnexec: mnexec.c $(MN) mininet/net.py
-	cc $(CFLAGS) $(LDFLAGS) -DVERSION=\"`PYTHONPATH=. $(PYMN) --version`\" $< -o $@
+	cc $(CFLAGS) $(LDFLAGS) -DVERSION=\"`PYTHONPATH=".${PYTHONPATH:+:}${PYTHONPATH}" $(PYMN) --version`\" $< -o $@
 
 install-mnexec: $(MNEXEC)
 	install -D $(MNEXEC) $(BINDIR)/$(MNEXEC)
